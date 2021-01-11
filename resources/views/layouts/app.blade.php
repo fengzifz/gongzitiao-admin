@@ -26,6 +26,7 @@
     <div class="c-body">
         <main class="c-main">
             <div class="container-fluid">
+                @include('layouts.message')
                 <div class="fade-in">
                     @yield('content')
                 </div>
