@@ -131,6 +131,53 @@ class HomeController extends Controller
             return redirect()->back()->with(['status' => 1, 'msg' => '保存成功']);
 
         }
+    }
 
+    public function salaryDetails(Request $request)
+    {
+        if (!$request->has('id')) {
+            abort(404, '没有记录');
+        }
+
+        $fields = null;
+        $salary = Salary::find($request->id);
+
+        if ($salary) {
+            $fields = SalaryField::where('year', $salary->year)
+                ->where('month', $salary->month)
+                ->get();
+        }
+
+        return view('salary.details', compact('salary', 'fields'));
+    }
+
+    public function history(Request $request)
+    {
+        $params = $request->all();
+        $latestRow = Salary::limit(1)->orderByDesc('created_at')
+            ->get()->first();
+
+        $startYear = (!empty($latestRow) ? $latestRow->year : Carbon::now()->year);
+        $startMonth = (!empty($latestRow) ? $latestRow->month : Carbon::now()->month);
+
+        $year = $request->has('year') && !empty($request->year) ? $request->year : $startYear;
+        $month = $request->has('month') && !empty($request->month) ? $request->month : $startMonth;
+
+        $list = Salary::where('year', $year)
+            ->where('month', $month);
+
+        if ($request->username) {
+            $username = $request->username;
+            $list->where('a1', 'like', "%$username%");
+        }
+
+        $salaries = $list->paginate(20);
+
+        $fields = SalaryField::where('year', $year)
+            ->where('month', $month)
+            ->get();
+
+        return view('salary.history', compact('year', 'month', 'startYear', 'startMonth',
+            'fields', 'salaries', 'params'));
     }
 }
