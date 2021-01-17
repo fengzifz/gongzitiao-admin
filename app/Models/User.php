@@ -10,6 +10,12 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const TYPE_ADMIN = 1; // 管理员
+    const TYPE_WECHAT = 2; // 微信用户
+
+    const STATUS_ENABLED = 0;
+    const STATUS_DISABLED = 1;
+
     /**
      * The attributes that are mass assignable.
      *
