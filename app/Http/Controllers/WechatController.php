@@ -97,7 +97,7 @@ class WechatController extends Controller
 
         // 用户绑定逻辑
         // 1. 先查询 name + phone，看用户是否存在，不存在，就创建用户
-        // 2. name + phone 用户存在时，对比 openid 是否一样，不一样就更新 openid，重新绑定
+        // 2. name + phone 用户存在时，对比 openid 是否一样，不一样就提示用户已经绑定，联系管理员解绑
         $name = trim($request->name);
         $phone = trim($request->phone);
         $user = User::where('username', $name)
@@ -118,9 +118,21 @@ class WechatController extends Controller
             $id = $newUser->id;
         } else {
             // 2.
-            $user->openid = $request->openid;
-            $user->save();
-            $id = $user->id;
+            // 检查用户 openid 是否和数据库的一样
+            if (!empty($user->openid)) {
+                if ($user->openid != $request->openid) {
+                    return response()->json(['err' => 1, 'msg' => '用户已经绑定，请先联系管理员解绑']);
+                }
+            } else {
+                // openid 为空时，直接保存 openid
+                $user->openid = $request->openid;
+                $user->save();
+                $id = $user->id;
+            }
+
+
+
+
         }
 
         $data = [

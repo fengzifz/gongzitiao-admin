@@ -11,6 +11,14 @@
                             <form method="post" enctype="multipart/form-data" action="{{ route('salary.import') }}">
                                 @csrf
                                 <div class="form-group row">
+                                    <div class="offset-sm-2 col-sm-10">
+                                        <span class="text-danger">
+                                            1. 年份、月份要和 excel 里面的“年份”、“月份”保持一致。<br/>
+                                            2. excel 里面，“姓名”需要固定放在第一列。
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-sm-2 col-form-label" for="year">年份</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" name="year">
