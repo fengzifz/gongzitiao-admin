@@ -21,6 +21,9 @@ Route::get('/salary/details', 'HomeController@salaryDetails')->name('salary.deta
 Route::get('/user', 'UserController@index')->name('user');
 Route::get('/user/disabled', 'UserController@disabled')->name('user.disabled');
 Route::get('/user/enabled', 'UserController@enabled')->name('user.enabled');
+Route::get('/user/remove_openid', 'UserController@removeOpenid')->name('user.remove.openid');
+Route::get('/user/edit', 'UserController@edit')->name('user.edit');
+Route::post('/user/edit', 'UserController@store')->name('user.store');
 
 Route::any('/wechat/login', 'WechatController@login');
 Route::post('/wechat/bind_user', 'WechatController@bindUser');

@@ -172,6 +172,7 @@ class WechatController extends Controller
         $salaries = Salary::where('a1', $user->username)
             ->orderByDesc('year')
             ->orderByDesc('month')
+            ->limit(3) // 只获取前 3 个月的工资
             ->get();
 
         $data = [];

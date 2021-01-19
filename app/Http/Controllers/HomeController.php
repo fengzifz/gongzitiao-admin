@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\SalaryImport;
 use App\Models\Salary;
 use App\Models\SalaryField;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

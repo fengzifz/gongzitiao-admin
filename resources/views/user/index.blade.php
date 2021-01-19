@@ -4,7 +4,23 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <div class="card-header"><strong>员工管理</strong></div>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <strong>员工管理</strong>
+                        </div>
+                        <div class="col-sm-10">
+                            <form class="form-inline float-sm-right">
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <input autocomplete="off" class="form-control" name="username"
+                                           value="{{ isset($params['username']) ? $params['username'] : '' }}"
+                                           placeholder="输入员工名字查询">
+                                </div>
+                                <button type="submit" class="btn btn-primary mb-2">查询</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12">
@@ -36,7 +52,7 @@
                                             @endif
                                         </td>
                                         <td>{{ $v->created_at }}</td>
-                                        <td>
+                                        <td class="text-center">
                                             @if($v->status == 1)
                                                 <a href="{{ route('user.enabled', ['id' => $v->id]) }}"
                                                    onclick="return confirm('解锁后，员工可以登录小程序')"
@@ -46,10 +62,19 @@
                                                    onclick="return confirm('锁定后，该员工无法登录小程序，是否确认？')"
                                                    class="btn btn-sm btn-danger">锁定</a>
                                             @endif
+                                            @if(!empty($v->openid))
+                                                <a href="{{ route('user.remove.openid', ['id' => $v->id]) }}"
+                                                   onclick="return confirm('解绑后，用户需要在微信端重新登录，是否确认？')"
+                                                   class="btn btn-sm btn-warning">
+                                                    解绑
+                                                </a>
+                                            @endif
+                                            <a href="{{ route('user.edit', ['id' => $v->id]) }}" class="btn btn-sm btn-dark">编辑</a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </table>
+                            {{ $users->appends($params)->links() }}
                         </div>
                     </div>
                 </div>
