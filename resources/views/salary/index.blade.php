@@ -14,7 +14,8 @@
                                     <div class="offset-sm-2 col-sm-10">
                                         <span class="text-danger">
                                             1. 年份、月份要和 excel 里面的“年份”、“月份”保持一致。<br/>
-                                            2. excel 里面，“姓名”需要固定放在第一列。
+                                            2. excel 里面，“姓名”需要固定放在第一列。<br/>
+                                            3. 重复导入某个年份、月份的工资，会进行覆盖操作。
                                         </span>
                                     </div>
                                 </div>
