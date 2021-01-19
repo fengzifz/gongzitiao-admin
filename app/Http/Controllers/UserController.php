@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -97,5 +98,32 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->back()->with(['status' => 1, 'msg' => '用户信息保存成功']);
+    }
+
+    public function changePwd(Request $request)
+    {
+        $user = Auth::user();
+        return view('user.change_pwd', compact('user'));
+    }
+
+    public function storePwd(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'password' => 'required|confirmed|min:6'
+        ], [
+            'password.required' => '密码不能为空',
+            'password.min' => '密码最少 6 位',
+            'password.confirmed' => '两次输入的密码不一致'
+        ]);
+
+        if ($validation->fails()) {
+            return redirect()->back()->with(['status' => 2, 'msg' => $validation->errors()->first()]);
+        }
+
+        $user = User::find($request->id);
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return redirect()->back()->with(['status' => 1, 'msg' => '密码更新成功']);
     }
 }

@@ -24,6 +24,8 @@ Route::get('/user/enabled', 'UserController@enabled')->name('user.enabled');
 Route::get('/user/remove_openid', 'UserController@removeOpenid')->name('user.remove.openid');
 Route::get('/user/edit', 'UserController@edit')->name('user.edit');
 Route::post('/user/edit', 'UserController@store')->name('user.store');
+Route::get('/user/change_pwd', 'UserController@changePwd')->name('user.change.pwd');
+Route::post('/user/change_pwd', 'UserController@storePwd')->name('user.store.pwd');
 
 Route::any('/wechat/login', 'WechatController@login');
 Route::post('/wechat/bind_user', 'WechatController@bindUser');
