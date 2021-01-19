@@ -101,7 +101,7 @@ class WechatController extends Controller
         $name = trim($request->name);
         $phone = trim($request->phone);
         $user = User::where('username', $name)
-            ->where('phone', $phone)
+            ->orWhere('phone', $phone)
             ->get()->first();
         $id = null;
 
