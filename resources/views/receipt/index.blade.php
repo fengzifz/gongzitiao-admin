@@ -44,8 +44,8 @@
                             <table class="table table-bordered table-striped">
                                 <tr>
                                     <th>姓名</th>
-                                    <th>年月</th>
-                                    <th>时间</th>
+                                    <th>所得工资时间</th>
+                                    <th>查看时间</th>
                                 </tr>
                                 @foreach($readSalaries as $k => $v)
                                     <tr>
@@ -61,7 +61,7 @@
                             <table class="table table-bordered table-striped">
                                 <tr>
                                     <th>姓名</th>
-                                    <th>年月</th>
+                                    <th>所得工资时间</th>
                                 </tr>
                                 @foreach($salaries as $k => $v)
                                     @if(!in_array($v->id, $readList))

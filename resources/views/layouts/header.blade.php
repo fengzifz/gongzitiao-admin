@@ -22,21 +22,21 @@
     {{--        <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Settings</a></li>--}}
     {{--    </ul>--}}
     <ul class="c-header-nav ml-auto mr-4">
-        <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">
-                <svg class="c-icon">
-                    <use xlink:href="{{ asset("plugins/coreui/icons/sprites/free.svg#cil-bell") }}"></use>
-                </svg>
-            </a></li>
-        <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">
-                <svg class="c-icon">
-                    <use xlink:href="{{ asset("plugins/coreui/icons/sprites/free.svg#cil-list-rich") }}"></use>
-                </svg>
-            </a></li>
-        <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">
-                <svg class="c-icon">
-                    <use xlink:href="{{ asset("plugins/coreui/icons/sprites/free.svg#cil-envelope-open") }}"></use>
-                </svg>
-            </a></li>
+{{--        <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">--}}
+{{--                <svg class="c-icon">--}}
+{{--                    <use xlink:href="{{ asset("plugins/coreui/icons/sprites/free.svg#cil-bell") }}"></use>--}}
+{{--                </svg>--}}
+{{--            </a></li>--}}
+{{--        <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">--}}
+{{--                <svg class="c-icon">--}}
+{{--                    <use xlink:href="{{ asset("plugins/coreui/icons/sprites/free.svg#cil-list-rich") }}"></use>--}}
+{{--                </svg>--}}
+{{--            </a></li>--}}
+{{--        <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">--}}
+{{--                <svg class="c-icon">--}}
+{{--                    <use xlink:href="{{ asset("plugins/coreui/icons/sprites/free.svg#cil-envelope-open") }}"></use>--}}
+{{--                </svg>--}}
+{{--            </a></li>--}}
         <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#"
                                                   role="button" aria-haspopup="true" aria-expanded="false">
                 <div class="c-avatar"><img class="c-avatar-img" src="{{ asset('images/y-icon.png') }}"
@@ -50,6 +50,12 @@
                         <use xlink:href="{{ asset("plugins/coreui/icons/sprites/free.svg#cil-baby") }}"></use>
                     </svg>
                     {{ Auth::check() ? Auth::user()->username : '游客' }}
+                </a>
+                <a class="dropdown-item" href="#">
+                    <svg class="c-icon mr-2">
+                        <use xlink:href="{{ asset("plugins/coreui/icons/sprites/free.svg#cil-audio") }}"></use>
+                    </svg>
+                    {{ request()->ip() }}
                 </a>
                 {{--                <a class="dropdown-item" href="#">--}}
                 {{--                    <svg class="c-icon mr-2">--}}
@@ -67,7 +73,7 @@
                 {{--                    </svg>--}}
                 {{--                    Comments<span class="badge badge-warning ml-auto">42</span></a>--}}
                 <div class="dropdown-header bg-light py-2"><strong>设置</strong></div>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{ route('user.change.pwd') }}">
                     <svg class="c-icon mr-2">
                         <use xlink:href="{{ asset("plugins/coreui/icons/sprites/free.svg#cil-user") }}"></use>
                     </svg>

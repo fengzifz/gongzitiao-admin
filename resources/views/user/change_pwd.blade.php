@@ -13,6 +13,12 @@
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $user->id }}">
                                 <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label text-right" for="year">角色</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" value="超级管理员" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-sm-2 col-form-label text-right" for="year">姓名</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" value="yeshm" disabled>
@@ -21,13 +27,13 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label text-right" for="year">密码</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" name="password">
+                                        <input type="password" autocomplete="off" class="form-control" name="password">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label text-right" for="year">确认密码</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" name="password_confirmation">
+                                        <input type="password" autocomplete="off" class="form-control" name="password_confirmation">
                                     </div>
                                 </div>
                                 <div class="form-group row">
