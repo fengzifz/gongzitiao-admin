@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Receipt;
 use App\Models\Salary;
 use App\Models\SalaryField;
 use App\Models\User;
@@ -129,10 +130,6 @@ class WechatController extends Controller
                 $user->save();
                 $id = $user->id;
             }
-
-
-
-
         }
 
         $data = [
@@ -238,7 +235,32 @@ class WechatController extends Controller
             $data[][$v->col_name] = $salary[$v->field_key];
         }
 
+        // 员工查看工资详细，表示他已经确认签收工资条
+        $receipt = Receipt::where('salary_id', $request->id)->get()->first();
+        if (!$receipt) {
+            $receipt = new Receipt();
+        }
+
+        $receipt->salary_id = $request->id;
+        $receipt->save();
+
         return response()->json(['err' => 0, 'msg' => 'ok', 'data' => $data]);
+    }
+
+    public function addReceipt(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'salary_id' => 'required',
+            'openid' => 'required'
+        ], [
+            'salary_id.required' => '参数 salary id 有误，请联系开发',
+            'openid.required' => '参数 openid 有误，请联系开发'
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json(['err' => 1, 'msg' => $validation->errors()->first()]);
+        }
+
     }
 
     /**

@@ -155,12 +155,19 @@ class HomeController extends Controller
     public function history(Request $request)
     {
         $params = $request->all();
-        $latestRow = Salary::limit(1)->orderByDesc('created_at')
+        $latestRow = Salary::limit(1)
+            ->orderBy('year')
+            ->orderBy('month')
             ->get()->first();
+
+        // 页面可选的年份范围
+        $yearRanges = Salary::groupBy('year')
+            ->pluck('year')->toArray();
 
         $startYear = (!empty($latestRow) ? $latestRow->year : Carbon::now()->year);
         $startMonth = (!empty($latestRow) ? $latestRow->month : Carbon::now()->month);
 
+        // 页面默认显示最新的 年份 + 月份 的数据
         $year = $request->has('year') && !empty($request->year) ? $request->year : $startYear;
         $month = $request->has('month') && !empty($request->month) ? $request->month : $startMonth;
 
@@ -179,6 +186,6 @@ class HomeController extends Controller
             ->get();
 
         return view('salary.history', compact('year', 'month', 'startYear', 'startMonth',
-            'fields', 'salaries', 'params'));
+            'fields', 'salaries', 'params', 'yearRanges'));
     }
 }

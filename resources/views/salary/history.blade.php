@@ -14,11 +14,9 @@
                             <form class="form-inline float-sm-right">
                                 <div class="form-group mb-2">
                                     <select class="form-control" name="year">
-                                        @for($i = 0; $i < 10; $i++)
-                                            <option
-                                                @if($year == ($startYear + $i)) selected @endif
-                                            value="{{ $startYear + $i }}">{{ $startYear + $i }}</option>
-                                        @endfor
+                                        @foreach($yearRanges as $k => $v)
+                                            <option @if($year == $v) selected @endif value="{{ $v }}">{{ $v }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group mx-sm-3 mb-2">

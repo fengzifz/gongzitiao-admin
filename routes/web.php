@@ -26,8 +26,10 @@ Route::get('/user/edit', 'UserController@edit')->name('user.edit');
 Route::post('/user/edit', 'UserController@store')->name('user.store');
 Route::get('/user/change_pwd', 'UserController@changePwd')->name('user.change.pwd');
 Route::post('/user/change_pwd', 'UserController@storePwd')->name('user.store.pwd');
+Route::get('/receipt', 'ReceiptController@index')->name('receipt');
 
 Route::any('/wechat/login', 'WechatController@login');
 Route::post('/wechat/bind_user', 'WechatController@bindUser');
 Route::any('/wechat/get_salary', 'WechatController@getSalary');
 Route::any('/wechat/salary/details', 'WechatController@salaryDetails');
+Route::any('/wechat/receipt/add', 'WechatController@addReceipt');
