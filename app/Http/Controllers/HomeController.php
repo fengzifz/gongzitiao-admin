@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\SalaryImport;
 use App\Models\Salary;
 use App\Models\SalaryField;
+use App\Models\Setting;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -164,6 +165,10 @@ class HomeController extends Controller
         $yearRanges = Salary::groupBy('year')
             ->pluck('year')->toArray();
 
+        if (empty($yearRanges)) {
+            array_push($yearRanges, Carbon::now()->year);
+        }
+
         $startYear = (!empty($latestRow) ? $latestRow->year : Carbon::now()->year);
         $startMonth = (!empty($latestRow) ? $latestRow->month : Carbon::now()->month);
 
@@ -187,5 +192,95 @@ class HomeController extends Controller
 
         return view('salary.history', compact('year', 'month', 'startYear', 'startMonth',
             'fields', 'salaries', 'params', 'yearRanges'));
+    }
+
+    public function salaryDelete(Request $request)
+    {
+        $latestRow = Salary::limit(1)
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get()->first();
+
+        $yearRanges = Salary::groupBy('year')->pluck('year')->toArray();
+        if (empty($yearRanges)) {
+            array_push($yearRanges, Carbon::now()->year);
+        }
+
+        $startYear = (!empty($latestRow) ? $latestRow->year : Carbon::now()->year);
+        $startMonth = (!empty($latestRow) ? $latestRow->month : Carbon::now()->month);
+
+        // 页面默认显示最新的 年份 + 月份 的数据
+        $year = $request->has('year') && !empty($request->year) ? $request->year : $startYear;
+        $month = $request->has('month') && !empty($request->month) ? $request->month : $startMonth;
+
+        return view('salary.delete', compact('yearRanges', 'year', 'month'));
+    }
+
+    public function salaryDoDelete(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'year' => 'required',
+            'month' => 'required'
+        ], [
+            'year.required' => '参数 年份 有误，请联系开发人员',
+            'month.required' => '参数 月份 有误，请联系开发人员'
+        ]);
+
+        if ($validation->fails()) {
+            return redirect()->back()->with(['status' => 2, 'msg' => $validation->errors()->first()]);
+        }
+
+        $year = $request->year;
+        $month = $request->month;
+
+        $query = Salary::where('year', $year)
+            ->where('month', $month);
+
+        if ($query->count() == 0) {
+            return redirect()->back()->with(['status' => 2, 'msg' => "$year 年 $month 月没有工资数据，请重新选择"]);
+        }
+
+        // 删除工资
+        $query->delete();
+
+        // 删除对应的 fields
+        SalaryField::where('year', $year)
+            ->where('month', $month)
+            ->delete();
+
+        return redirect()->back()->with(['status' => 1, 'msg' => "$year 年 $month 月工资已经删除成功"]);
+    }
+
+    public function settings(Request $request)
+    {
+        $ip = $request->ip();
+        $ips = Setting::where('key_name', 'ip_allowed')
+            ->get()->first();
+        return view('settings.index', compact('ips', 'ip'));
+    }
+
+    public function storeIp(Request $request)
+    {
+        $ips = $request->ip_allowed;
+
+        if (empty($ips)) {
+            return redirect()->back()->with(['status' => 2, 'msg' => 'ip 地址不能为空']);
+        }
+
+        $ipArr = explode(',', $ips);
+
+        foreach ($ipArr as $ip) {
+            if(!filter_var(trim($ip), FILTER_VALIDATE_IP)) {
+                return redirect()->back()->with(['status' => 2, 'msg' => "$ip 不是有效的 IP 地址"])->withInput();
+            }
+        }
+
+        $setting = Setting::where('key_name', 'ip_allowed')
+            ->get()->first();
+        $setting->value = str_replace(' ', '', $ips);
+        $setting->save();
+
+        return redirect()->back()->with(['status' => 1, 'msg' => 'IP 白名单保存成功']);
+
     }
 }

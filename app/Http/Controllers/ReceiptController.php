@@ -18,7 +18,7 @@ class ReceiptController extends Controller
     //
     public function index(Request $request)
     {
-        $yearRanges = Salary::groupBy('year')
+        $yearRanges = Receipt::groupBy('year')
             ->pluck('year')->toArray();
 
         $latestRow = Salary::limit(1)
