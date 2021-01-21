@@ -51,7 +51,7 @@
                                     <tr>
                                         <td>{{ $v->name }}</td>
                                         <td>{{ $v->year }}年{{ $v->month }}月</td>
-                                        <td>{{ $v->read_at }}</td>
+                                        <td>{{ $v->created_at }}</td>
                                     </tr>
                                 @endforeach
                             </table>

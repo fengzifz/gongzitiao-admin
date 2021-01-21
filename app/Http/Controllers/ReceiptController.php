@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Receipt;
 use App\Models\Salary;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,12 +38,8 @@ class ReceiptController extends Controller
             ->where('month', $month)
             ->get();
 
-        $readSalaries = Salary::select([
-            'receipts.created_at as read_at', 'receipts.salary_id',
-            'salaries.a1 as name', 'salaries.a2 as year', 'salaries.a3 as month'])
-            ->where('year', $year)
+        $readSalaries = Receipt::where('year', $year)
             ->where('month', $month)
-            ->join('receipts', 'salaries.id', '=', 'receipts.salary_id')
             ->get();
 
         $readList = $readSalaries->pluck('salary_id')->toArray();

@@ -242,6 +242,9 @@ class WechatController extends Controller
         }
 
         $receipt->salary_id = $request->id;
+        $receipt->name = $salary->a1; // a1 is name
+        $receipt->year = $salary->a2; // a2 is year
+        $receipt->month = $salary->a3; // a3 is month
         $receipt->save();
 
         return response()->json(['err' => 0, 'msg' => 'ok', 'data' => $data]);
