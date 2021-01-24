@@ -21,6 +21,10 @@ class ReceiptController extends Controller
         $yearRanges = Receipt::groupBy('year')
             ->pluck('year')->toArray();
 
+        if (empty($yearRanges)) {
+            $yearRanges[] = Carbon::now()->year;
+        }
+
         $latestRow = Salary::limit(1)
             ->orderByDesc('year')
             ->orderByDesc('month')

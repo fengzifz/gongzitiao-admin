@@ -1,10 +1,10 @@
 <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
     <div class="c-sidebar-brand d-lg-down-none">
         <div class="c-sidebar-brand-full">
-            <h5>YESHM 工资条</h5>
+            <h5>工资条</h5>
         </div>
         <div class="c-sidebar-brand-minimized">
-            YHM
+            GZT
         </div>
     </div>
     <ul class="c-sidebar-nav">

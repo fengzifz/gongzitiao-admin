@@ -13,8 +13,8 @@ class SettingSeeder extends Seeder
     {
         //
         \App\Models\Setting::insert([
-            'key_name' => 'ip_allowed',
-            'value' => '0.0.0.0'
+            ['key_name' => 'ip_allowed', 'value' => '0.0.0.0'],
+            ['key_name' => 'maintain', 'value' => '0'],
         ]);
     }
 }

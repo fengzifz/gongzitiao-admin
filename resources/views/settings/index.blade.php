@@ -7,7 +7,7 @@
                 <div class="card-header"><strong>IP 白名单</strong></div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-6 offset-sm-3">
+                        <div class="col-sm-6 offset-sm-0">
 
                             <form method="post" action="{{ route('settings.store.ip') }}">
                                 @csrf
@@ -38,6 +38,38 @@
                                 </div>
                             </form>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header"><strong>系统维护</strong></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 offset-sm-0">
+                            <form method="post" action="{{ route('settings.store.maintain') }}">
+                                @csrf
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label text-right" for="year">系统维护</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="maintain">
+                                            <option value="0" @if($maintain->value == 0) selected @endif>关闭</option>
+                                            <option value="1" @if($maintain->value == 1) selected @endif>开启</option>
+                                        </select>
+                                        <div class="text-danger">
+                                            说明：开启后，所有用户无法登录小程序。
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-10 offset-sm-2">
+                                        <button class="btn btn-primary" type="submit">保存</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

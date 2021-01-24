@@ -5,17 +5,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="YESHM 工资条">
+    <meta name="description" content="工资条">
     <meta name="author" content="Damon Chen">
-    <meta name="keyword" content="YESHM">
-    <title>YESHM 工资条</title>
+    <meta name="keyword" content="工资条">
+    <title>工资条</title>
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <!-- Main styles for this application-->
     <link href="{{ asset('plugins/coreui/icons/css/all.css') }}" rel="stylesheet">
     <link href="{{ asset('plugins/coreui/css/coreui.css') }}" rel="stylesheet">
 </head>
-<body class="c-app flex-row align-items-center">
+<body class="c-app flex-row align-items-center"
+      style="background-image: url({{ asset('images/bg.jpg') }});background-size: cover;"
+      id="login-page">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -25,7 +27,7 @@
                         <form method="post" action="{{ route('login') }}">
                             {{ csrf_field() }}
                             <h1>登录</h1>
-                            <p class="text-muted">YESHM 工资条</p>
+                            <p class="text-muted">工资条</p>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                 <span class="input-group-text">

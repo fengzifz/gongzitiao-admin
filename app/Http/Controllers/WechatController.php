@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Receipt;
 use App\Models\Salary;
 use App\Models\SalaryField;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -36,12 +37,19 @@ class WechatController extends Controller
         $user = User::where('openid', $openid)
             ->get()->first();
 
-        // verify: 0 未绑定，1 已绑定，2 禁止用户进入小程序
-        if ($user) {
-            if ($user->status == User::STATUS_ENABLED) {
-                $data['verify'] = 1;
-            } else {
-                $data['verify'] = 2;
+        $maintain = Setting::where('key_name', 'maintain')
+            ->get()->first();
+
+        // verify: 0 未绑定，1 已绑定，2 禁止用户进入小程序，3 系统维护
+        if ($maintain && $maintain->value == 1) {
+            $data['verify'] = 3;
+        } else {
+            if ($user) {
+                if ($user->status == User::STATUS_ENABLED) {
+                    $data['verify'] = 1;
+                } else {
+                    $data['verify'] = 2;
+                }
             }
         }
 
@@ -174,6 +182,7 @@ class WechatController extends Controller
 
         $data = [];
 
+        // 把结果组合成 field_name => value，方便前端输出
         if ($salaries->count() > 0) {
             foreach ($salaries as $k => $v) {
 

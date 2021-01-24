@@ -32,6 +32,7 @@ Route::group(['middleware' => ['ip_allowed']], function () {
     Route::post('/salary/delete', 'HomeController@salaryDoDelete')->name('salary.do.delete');
     Route::get('/settings', 'HomeController@settings')->name('settings');
     Route::post('/settings/ip/store', 'HomeController@storeIp')->name('settings.store.ip');
+    Route::post('/settings/maintain/store', 'HomeController@storeMaintain')->name('settings.store.maintain');
 });
 
 Route::any('/wechat/login', 'WechatController@login');

@@ -256,7 +256,18 @@ class HomeController extends Controller
         $ip = $request->ip();
         $ips = Setting::where('key_name', 'ip_allowed')
             ->get()->first();
-        return view('settings.index', compact('ips', 'ip'));
+        $maintain = Setting::where('key_name', 'maintain')
+            ->get()->first();
+        return view('settings.index', compact('ips', 'ip', 'maintain'));
+    }
+
+    public function storeMaintain(Request $request)
+    {
+        $setting = Setting::where('key_name', 'maintain')
+            ->get()->first();
+        $setting->value = $request->maintain;
+        $setting->save();
+        return redirect()->back()->with(['status' => 1, 'msg' => '系统维护保存成功']);
     }
 
     public function storeIp(Request $request)
